@@ -78,29 +78,46 @@ def tic_tac_toe(board):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
    
-    for row in board:
-        is_same = all([row[0] == symbol for symbol in row])
-        if is_same:
-            return row [0]
+    horizontal_line = [w for w in board]
+    vertical_line = [w for w in zip(*board)]
+    updown_diagonal_line = [board[i][i] for i,v in enumerate(board)]
+    downup_diagonal_line = [board[(len(board)-1)-i][i] for i,v in enumerate(board)]
     
-    for column in zip(*board):
-        is_same = all([column[0]== symbol for symbol in column])
-        if is_same:
-            return column [0]
-        
-    n = len(board)
-    up_down_symbols = [board[i][i] for i in range(n)]
-    up_down_same = all([up_down_symbols[0] == symbol for symbol in up_down_symbols])
-    if up_down_same:
-        return up_down_symbols[0]
+    for j,m in enumerate(horizontal_line):
+        if j<len(horizontal_line):
+            if all([a=="X" for a in m]):
+                return "X"
+            elif all([a=="O" for a in m]):
+                return "O"
+            else:
+                continue
+        else:
+            break
     
-    down_up_symbols = [board[i][i] for i in range(n)]
-    down_up_same = all([down_up_symbols[0] == symbol for symbol in down_up_symbols])
-    if down_up_same:
-        return down_up_symbols[0]   
-
-    return 'NO WINNER'
-
+    for l,n in enumerate(vertical_line):
+        if l<len(vertical_line):
+            if all([a=="X" for a in n]):
+                return "X"
+            elif all([a=="O" for a in n]):
+                return "O"
+            else:
+                continue
+        else:
+            break
+            
+    if all([a=="X" for a in updown_diagonal_line]):
+        return "X"
+    elif all([a=="O" for a in updown_diagonal_line]):
+        return "O"
+    if all([a=="X" for a in downup_diagonal_line]):
+        return "X"
+    elif all([a=="O" for a in downup_diagonal_line]):
+        return "O"
+    
+    else:
+        return "NO WINNER"
+    
+            
 def eta(first_stop, second_stop, route_map):
     '''ETA. 
     25 points.
@@ -133,7 +150,36 @@ def eta(first_stop, second_stop, route_map):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     
-    tuple_key = (first_stop, second_stop)
-    travel_time = legs[tuple_key]
-    
-    return travel_time
+    legs = route_map
+    placeholder = []
+    placeholder.append(first_stop)
+    placeholder.append(second_stop)
+    placeholder = tuple(placeholder)
+    trip = legs.keys()
+    endgame = []
+    travel_time = 0
+    if first_stop == second_stop:
+        travel_time = 0
+    if placeholder in legs.keys():
+        travel_time = legs[placeholder]["travel_time_mins"]
+    else:
+        while second_stop != endgame:
+            for i in range(len(legs.keys())):
+                placeholder = []
+                placeholder.append(first_stop)
+                trip = legs.keys()
+                trip = list(trip)
+                trip = trip[i]
+                trip = list(trip)
+                trip = trip[1]
+                trip.append(trip)
+                trip = tuple(placeholder)
+                if placeholder in legs.keys():
+                    travel_time += legs[placeholder]["travel_time_mins"]
+                    first_stop = trip
+                    endgame = trip
+                    break
+                else:
+                    continue
+                    
+    return(travel_time) 
