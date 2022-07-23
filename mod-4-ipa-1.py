@@ -150,36 +150,24 @@ def eta(first_stop, second_stop, route_map):
     # Replace `pass` with your code. 
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     
-    legs = route_map
-    placeholder = []
-    placeholder.append(first_stop)
-    placeholder.append(second_stop)
-    placeholder = tuple(placeholder)
-    trip = legs.keys()
-    endgame = []
-    travel_time = 0
-    if first_stop == second_stop:
-        travel_time = 0
-    if placeholder in legs.keys():
-        travel_time = legs[placeholder]["travel_time_mins"]
-    else:
-        while second_stop != endgame:
-            for i in range(len(legs.keys())):
-                placeholder = []
-                placeholder.append(first_stop)
-                trip = legs.keys()
-                trip = list(trip)
-                trip = trip[i]
-                trip = list(trip)
-                trip = trip[1]
-                trip.append(trip)
-                trip = tuple(placeholder)
-                if placeholder in legs.keys():
-                    travel_time += legs[placeholder]["travel_time_mins"]
-                    first_stop = trip
-                    endgame = trip
-                    break
-                else:
+    destination_routes = route_map.keys()
+    j = [x for x,y in enumerate(destination_routes)]
+    k = [y for x,y in enumerate(destination_routes)]
+    l = [y for y,z in k]
+    m = [z for y,z in k]
+    recurring_mins = 0
+    for o in l:
+        p = l.index(o)
+        if o == first_stop:
+            while(True):
+                if m[p] != second_stop:
+                    stop_mins = int(route_map[l[p],m[p]]['travel_time_mins'])
+                    recurring_mins += stop_mins
+                    if p == len(l) - 1:
+                        p = 0
+                    elif p < len(l):
+                        p += 1
                     continue
-                    
-    return(travel_time) 
+                elif m[p] == second_stop:
+                    first_stop_mins = int(route_map[l[p],m[p]]['travel_time_mins'])
+                    return recurring_mins + first_stop_mins
