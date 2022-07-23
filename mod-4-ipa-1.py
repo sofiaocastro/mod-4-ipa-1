@@ -151,23 +151,24 @@ def eta(first_stop, second_stop, route_map):
     # Stay within the function. Only use the parameters as input. The function should return your answer.
     
     destination_routes = route_map.keys()
-    j = [x for x,y in enumerate(destination_routes)]
-    k = [y for x,y in enumerate(destination_routes)]
-    l = [y for y,z in k]
-    m = [z for y,z in k]
+    a = [x for x,y in enumerate(destination_routes)]
+    b = [y for x,y in enumerate(destination_routes)]
+    c = [y for y,z in b]
+    d = [z for y,z in b]
     recurring_mins = 0
-    for o in l:
-        p = l.index(o)
-        if o == first_stop:
+    for e in c:
+        f = c.index(e)
+        if e == first_stop:
             while(True):
-                if m[p] != second_stop:
-                    stop_mins = int(route_map[l[p],m[p]]['travel_time_mins'])
+                if d[f] != second_stop:
+                    stop_mins = int(route_map[c[f],d[f]]['travel_time_mins'])
                     recurring_mins += stop_mins
-                    if p == len(l) - 1:
-                        p = 0
-                    elif p < len(l):
-                        p += 1
+                    if f == len(l) - 1:
+                        f = 0
+                    elif f < len(l):
+                        f += 1
                     continue
-                elif m[p] == second_stop:
-                    first_stop_mins = int(route_map[l[p],m[p]]['travel_time_mins'])
+                elif d[f] == second_stop:
+                    first_stop_mins = int(route_map[c[f],d[f]]['travel_time_mins'])
                     return recurring_mins + first_stop_mins
+
